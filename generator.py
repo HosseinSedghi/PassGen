@@ -9,7 +9,7 @@ class Generator:
 	def __init__(self, characters=CARACHTERS, lenght=LENGHT):
 		self.characters = characters
 		self.lenght = lenght
-		self.password = ''
+		self.password = 'password'
 
 	def generate(self):
 		password =  ''.join(choice(self.characters) for i in range(self.lenght))
@@ -19,11 +19,8 @@ class Generator:
 	def copy_password(self):
 		# return 200 = copied seccussful
 		# return 501 = password not exist
-		if self.password:
-			# copy(self.password)
-			return "200"
-		else:
-			return "501"
+		# copy(self.password)
+		pass
 
 	def __str__(self):
 		return f"lenght: {self.lenght}\ncharacters: {self.characters}"
