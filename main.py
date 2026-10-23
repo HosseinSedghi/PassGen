@@ -55,7 +55,7 @@ class PasswordGeneratorApp(ctk.CTk):
         self.generate_btn.pack(pady=15, padx=20, fill="x")
 
         # status label ( for errors or etc. )
-        self.status_label = ctk.CTkLabel(self, text="", font=("Tahoma", 13), text_color="gray")
+        self.status_label = ctk.CTkLabel(self, text="", font=("Consolas", 13), text_color="gray")
         self.status_label.pack(pady=(0, 10))
 
     def generate_password(self):
