@@ -13,8 +13,9 @@ class PasswordGeneratorApp(ctk.CTk):
 
         # window settings
         self.title("PassGen - Password Generator")
-        self.geometry("420x280")
+        self.geometry("420x240")
         self.resizable(False, False)
+        self.iconbitmap("images/key-icon.ico")
 
         # top page title
         self.title_label = ctk.CTkLabel(self, text="Password Generator", font=("Consolas", 19, "bold"))
