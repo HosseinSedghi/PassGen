@@ -1,5 +1,4 @@
 from random import choice
-from clipboard import copy
 
 CARACHTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 LENGHT = 30
@@ -15,16 +14,10 @@ class Generator:
 		self.password = password
 		return password
 
-	def copy_password(self):
-		copy(self.password)
-		return self.password
-
 	def __str__(self):
 		return f"lenght: {self.lenght}\ncharacters: {self.characters}"
 
 if __name__ == "__main__":
 	p = Generator()
-	print(p.copy_password())
 	print(p)
 	print(p.generate())
-	print(p.copy_password())

@@ -1,6 +1,7 @@
 import string
 import customtkinter as ctk
 from generator import Generator
+from clipboard import copy
 
 # theme initialize
 ctk.set_appearance_mode("System")  # other options : "System", "Dark", "Light"
@@ -68,7 +69,7 @@ class PasswordGeneratorApp(ctk.CTk):
         self.status_label.configure(text="Password generated!", text_color="#2b8a3e")
 
     def copy_password(self):
-        password = self.password.copy_password()
+        password = self.password_entry.get()
         if password:
             self.clipboard_clear()
             self.clipboard_append(password)
