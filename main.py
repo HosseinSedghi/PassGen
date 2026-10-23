@@ -44,7 +44,7 @@ class PasswordGeneratorApp(ctk.CTk):
         )
         self.copy_btn.pack(side="right")
 
-        # دکمه تولید رمز عبور (Generate)
+        # Generate btn
         self.generate_btn = ctk.CTkButton(
             self, 
             text="Generate", 
