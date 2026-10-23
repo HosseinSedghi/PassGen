@@ -1,32 +1,80 @@
-from tkinter import Tk, Button, Label
+import string
+import customtkinter as ctk
 from generator import Generator
-# TODO : add password lenght field
 
-root = Tk()
-root.title("PassGen")
-root.resizable(0, 0)
+# theme initialize
+ctk.set_appearance_mode("System")  # other options : "System", "Dark", "Light"
+ctk.set_default_color_theme("blue")  # other options : "blue", "green", "dark-blue"
 
-password_object = Generator() # Create an object
+class PasswordGeneratorApp(ctk.CTk):
+    def __init__(self):
+        super().__init__()
+        self.password = Generator()
 
-def set_password_into_label(password, lbl_object):
-	lbl_password['text'] = password
+        # window settings
+        self.title("PassGen - Password Generator")
+        self.geometry("420x280")
+        self.resizable(False, False)
 
-def generate_password():
-	global password_object
-	password = password_object.generate()
-	set_password_into_label(password, lbl_password)
+        # top page title
+        self.title_label = ctk.CTkLabel(self, text="Password Generator", font=("Consolas", 19, "bold"))
+        self.title_label.pack(pady=(20, 10))
 
-def set_copy_tag_into_lebel(lbl_object):
-	lbl_object['text'] = lbl_object['text'] + ' - copied!'
+        # card password with copy btn
+        self.result_frame = ctk.CTkFrame(self, fg_color="transparent")
+        self.result_frame.pack(pady=10, padx=20, fill="x")
 
-def copy_password():
-	password_object.copy_password()
-	set_copy_tag_into_lebel(lbl_password)
+        self.password_entry = ctk.CTkEntry(
+            self.result_frame, 
+            placeholder_text="Your password ... ",
+            font=("Consolas", 14),
+            height=40
+        )
+        self.password_entry.pack(side="left", expand=True, fill="x", padx=(0, 10))
 
-btn_generate = Button(root, text="Generate", width=20, font=("Consolas", 17), command=generate_password)
-btn_copy = Button(root, text="Copy", width=10, font=("Consolas", 17), command=copy_password)
-lbl_password = Label(root, text="Password", font=("Consolas", 16), justify='center', anchor="center")
-btn_generate.grid(row=0, column=0, padx=(15, 0), pady=(15, 0))
-btn_copy.grid(row=0, column=1, padx=(0, 15), pady=(15, 0))
-lbl_password.grid(row=1, column=0,)
-root.mainloop()
+        # copy btn
+        self.copy_btn = ctk.CTkButton(
+            self.result_frame, 
+            text="Copy", 
+            font=("Consolas", 15),
+            width=80, 
+            height=40,
+            command=self.copy_password,
+            fg_color="#2b8a3e", hover_color="#2b7536"
+        )
+        self.copy_btn.pack(side="right")
+
+        # دکمه تولید رمز عبور (Generate)
+        self.generate_btn = ctk.CTkButton(
+            self, 
+            text="Generate", 
+            font=("Consolas", 16, "bold"),
+            height=45,
+            command=self.generate_password
+        )
+        self.generate_btn.pack(pady=15, padx=20, fill="x")
+
+        # status label ( for errors or etc. )
+        self.status_label = ctk.CTkLabel(self, text="", font=("Tahoma", 13), text_color="gray")
+        self.status_label.pack(pady=(0, 10))
+
+    def generate_password(self):
+        password = self.password.generate()
+        
+        # show password
+        self.password_entry.delete(0, "end")
+        self.password_entry.insert(0, password)
+        self.status_label.configure(text="Password generated!", text_color="#2b8a3e")
+
+    def copy_password(self):
+        password = self.password.copy_password()
+        if password:
+            self.clipboard_clear()
+            self.clipboard_append(password)
+            self.status_label.configure(text="The password copied!", text_color="#1971c2")
+        else:
+            self.status_label.configure(text="At first, generate a new password!", text_color="#c92a2a")
+
+if __name__ == "__main__":
+    app = PasswordGeneratorApp()
+    app.mainloop()
