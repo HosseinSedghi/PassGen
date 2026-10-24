@@ -1,16 +1,21 @@
 import string
 import customtkinter as ctk
-from generator import Generator
 from clipboard import copy
+from random import choice
+
+CARACHTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+LENGHT = 30
 
 # theme initialize
 ctk.set_appearance_mode("System")  # other options : "System", "Dark", "Light"
 ctk.set_default_color_theme("blue")  # other options : "blue", "green", "dark-blue"
 
 class PasswordGeneratorApp(ctk.CTk):
-    def __init__(self):
+    def __init__(self, characters, lenght):
         super().__init__()
-        self.password = Generator()
+        self.characters = characters
+        self.lenght = lenght
+        self.password = ''
 
         # window settings
         self.title("PassGen - Password Generator")
@@ -61,8 +66,10 @@ class PasswordGeneratorApp(ctk.CTk):
         self.status_label.pack(pady=(0, 10))
 
     def generate_password(self):
-        password = self.password.generate()
+        password =  ''.join(choice(self.characters) for i in range(self.lenght))
         
+        self.password = password
+
         # show password
         self.password_entry.delete(0, "end")
         self.password_entry.insert(0, password)
@@ -78,5 +85,5 @@ class PasswordGeneratorApp(ctk.CTk):
             self.status_label.configure(text="At first, generate a new password!", text_color="#c92a2a")
 
 if __name__ == "__main__":
-    app = PasswordGeneratorApp()
+    app = PasswordGeneratorApp(CARACHTERS, LENGHT)
     app.mainloop()
